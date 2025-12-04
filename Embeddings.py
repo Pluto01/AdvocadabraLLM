@@ -14,8 +14,7 @@ os.makedirs(EMBED_DIR, exist_ok=True)
 EMB_FILE = os.path.join(EMBED_DIR, "embeddings.npy")
 META_FILE = os.path.join(EMBED_DIR, "metadata.joblib")
 CHECKPOINT_FILE = os.path.join(EMBED_DIR, "checkpoint.json")
-
-MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"  
+MODEL_NAME = "intfloat/e5-base"
 BATCH_SIZE = 64  
 
 
@@ -64,7 +63,7 @@ def build_embeddings():
         embeddings = np.load(EMB_FILE)
         print(f"[LOAD] Loaded existing embeddings: {embeddings.shape}")
     else:
-        embeddings = np.zeros((total, 384), dtype="float32")
+        embeddings = np.zeros((total, 768), dtype="float32")
 
     if os.path.exists(META_FILE):
         metadata = joblib.load(META_FILE)
