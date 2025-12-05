@@ -7,7 +7,7 @@ from tqdm import tqdm
 from sentence_transformers import SentenceTransformer
 
 
-DI_PATH = "/Users/uditkandi/project 3-1/di_dataset2.jsonl"  
+DI_PATH = "/Users/srinandanasarmakesapragada/Documents/data_raw/di_dataset.jsonl"  
 EMBED_DIR = "./di_prime_embeddings"
 os.makedirs(EMBED_DIR, exist_ok=True)
 
@@ -58,19 +58,59 @@ def build_embeddings():
     start_idx = cp.get("done", 0)
     print(f"[RESUME] Starting from index {start_idx}")
 
-    # Load or init memory arrays
-    if os.path.exists(EMB_FILE):
-        embeddings = np.load(EMB_FILE)
-        print(f"[LOAD] Loaded existing embeddings: {embeddings.shape}")
-    else:
-        embeddings = np.zeros((total, 768), dtype="float32")
+    # initialize model early so we know embedding dim
+    model = SentenceTransformer(MODEL_NAME)
+    embedding_dim = model.get_sentence_embedding_dimension()
 
+    # Load or init embeddings safely
+    if os.path.exists(EMB_FILE):
+        loaded = np.load(EMB_FILE)
+        print(f"[LOAD] Loaded existing embeddings: {loaded.shape}")
+
+        # ensure 2D shape and copy data
+        if loaded.size == 0 or loaded.shape[0] == 0:
+            # file exists but empty -> create full array
+            embeddings = np.zeros((total, embedding_dim), dtype="float32")
+            actual_embedded = 0
+        else:
+            # loaded has some rows; handle possible mismatch in dim/rows
+            if loaded.ndim == 1:
+                loaded = loaded.reshape(-1, embedding_dim)
+            if loaded.shape[1] != embedding_dim:
+                raise ValueError(f"Loaded embeddings dim {loaded.shape[1]} != model dim {embedding_dim}")
+            
+            # Count actual non-zero embeddings
+            non_zero_mask = np.sum(np.abs(loaded), axis=1) > 0
+            actual_embedded = np.sum(non_zero_mask)
+            
+            # Always create new array and copy existing data
+            embeddings = np.zeros((total, embedding_dim), dtype="float32")
+            if loaded.shape[0] > 0:
+                copy_rows = min(loaded.shape[0], total)
+                embeddings[:copy_rows] = loaded[:copy_rows]
+    else:
+        embeddings = np.zeros((total, embedding_dim), dtype="float32")
+        actual_embedded = 0
+
+    # Use checkpoint start_idx, but validate against actual embeddings
+    print(f"[INFO] Checkpoint start index: {start_idx}")
+    print(f"[INFO] Actual embedded cases: {actual_embedded}")
+    
+    # If checkpoint is ahead of actual embeddings, use actual count
+    if start_idx > actual_embedded:
+        print(f"[WARNING] Checkpoint ({start_idx}) > actual embeddings ({actual_embedded}). Using actual count.")
+        start_idx = actual_embedded
+    
+    print(f"[INFO] Starting embedding from index {start_idx}")
+
+    # metadata handling
     if os.path.exists(META_FILE):
         metadata = joblib.load(META_FILE)
+        # ensure metadata length == total
+        if len(metadata) < total:
+            metadata.extend([{} for _ in range(total - len(metadata))])
     else:
         metadata = [{} for _ in range(total)]
-
-    model = SentenceTransformer(MODEL_NAME)
 
     t0 = time.time()
     processed = start_idx
@@ -80,6 +120,9 @@ def build_embeddings():
         text = make_text(case)
 
         emb = model.encode(text, convert_to_numpy=True)
+        if emb.shape[0] != embedding_dim:
+            raise ValueError(f"embedding dim mismatch at index {i}: got {emb.shape[0]} expected {embedding_dim}")
+
         embeddings[i] = emb
         metadata[i] = {"case_id": case.get("case_id"), "text_len": len(text)}
 
@@ -91,7 +134,7 @@ def build_embeddings():
             save_checkpoint({"done": processed})
 
             elapsed = time.time() - t0
-            rate = processed / elapsed
+            rate = processed / elapsed if elapsed > 0 else 0
             eta = (total - processed) / rate if rate > 0 else 99999
 
             print(f"\n[CHECKPOINT] Saved at {processed}/{total}. ETA {int(eta/60)} min\n")

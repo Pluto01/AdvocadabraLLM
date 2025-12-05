@@ -4,8 +4,8 @@ import re
 import unicodedata
 from tqdm import tqdm
 
-RAW_ROOT = "/Users/uditkandi/Downloads/data_raw"
-OUT_DIR = "/Users/uditkandi/myjava/Sliding window/c/Advocadabra/output"
+RAW_ROOT = "/Users/srinandanasarmakesapragada/Documents/data_raw"
+OUT_DIR = "/Users/srinandanasarmakesapragada/Documents/data_raw"
 OUT_FILE = os.path.join(OUT_DIR, "di_dataset.jsonl")
 
 

@@ -4,12 +4,12 @@ import joblib
 import json
 from sentence_transformers import SentenceTransformer
 
-EMB_DIR = "/Users/uditkandi/project 3-1/di_prime_embeddings"
+EMB_DIR = "./di_prime_embeddings"
 EMB_FILE = f"{EMB_DIR}/embeddings.npy"
 META_FILE = f"{EMB_DIR}/metadata.joblib"
 FAISS_FILE = f"{EMB_DIR}/faiss.index"
 
-DI_PATH = "/Users/uditkandi/project 3-1/di_dataset2.jsonl"
+DI_PATH = "/Users/srinandanasarmakesapragada/Documents/data_raw/di_dataset.jsonl"
 
 print("Loading FAISS index...")
 index = faiss.read_index(FAISS_FILE)
@@ -58,7 +58,7 @@ def retrieve_similar_cases(query_text, k=10):
         seen_ids.add(cid)
 
         case = cases[idx]
-        sample = case.get("summary") or case.get("raw_text", "")[:200]
+        sample = case.get("summary") or case.get("raw_text", "")[:20000]
 
         results.append({
             "case_id": cid,
@@ -73,16 +73,14 @@ def retrieve_similar_cases(query_text, k=10):
 
 
 if __name__ == "__main__":
-    print("Testing SCR...\n")
+    
+    print("Enter your query:")
+    query = input("> ")
 
-    query = """
-    Patent infringement involving mechanical coupling design.
-    Plaintiff claims defendant copied a patented mechanism.
-    """
+    k = 10
+    results = retrieve_similar_cases(query, k=k)
 
-    results = retrieve_similar_cases(query, k=10)
-
-    print("\nTop 10 UNIQUE similar cases:\n")
+    print(f"\nTop {k} UNIQUE similar cases:\n")
     for r in results:
         print(f"Case ID: {r['case_id']} | Score: {r['score']}")
-        print(f"Text sample: {r['text_sample']}\n")
+        print(f"Text sample:\n{r['text_sample']}\n")

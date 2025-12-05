@@ -2,16 +2,20 @@ import faiss
 import numpy as np
 import joblib
 import json
+import argparse
 from sentence_transformers import SentenceTransformer
 
 # ---------------------------------------------
 # PATHS
 # ---------------------------------------------
-EMB_DIR = "/Users/uditkandi/project 3-1/di_prime_embeddings"
+EMB_DIR = "./di_prime_embeddings"
 META_FILE = f"{EMB_DIR}/metadata.joblib"
 FAISS_FILE = f"{EMB_DIR}/faiss.index"
-DI_PATH = "/Users/uditkandi/project 3-1/di_dataset2.jsonl"
+DI_PATH = "/Users/srinandanasarmakesapragada/Documents/data_raw/di_dataset.jsonl"
 
+# ---------------------------------------------
+# Load resources
+# ---------------------------------------------
 print("Loading FAISS index...")
 index = faiss.read_index(FAISS_FILE)
 
@@ -43,13 +47,12 @@ COURT_PRESTIGE = {
 }
 
 def court_score(text):
-    text = text.lower()
+    text = (text or "").lower()
     score = 0.0
     for court, w in COURT_PRESTIGE.items():
         if court in text:
             score += w
     return score
-
 
 # ---------------------------------------------
 # BAD CASE FILTER: Remove procedural junk
@@ -70,9 +73,8 @@ BAD_PHRASES = [
 ]
 
 def is_procedural_case(text):
-    t = text.lower()
+    t = (text or "").lower()
     return any(p in t for p in BAD_PHRASES)
-
 
 # ---------------------------------------------
 # KEYWORD DEPTH SCORE (reasoning strength)
@@ -89,49 +91,56 @@ DEPTH_KEYWORDS = [
 ]
 
 def reasoning_depth(text):
-    t = text.lower()
+    t = (text or "").lower()
     score = 0
     for key, w in DEPTH_KEYWORDS:
         if key in t:
             score += w
     return score
 
-
 # ---------------------------------------------
 # MAIN PCR FUNCTION
 # ---------------------------------------------
-def recommend_precedents(query_text, k=10):
-    # E5 requires prefix
+def recommend_precedents(query_text, k=10, sample_size=1000, min_length=800, search_limit=None):
+    # Ensure query is trimmed and prefixed for e5
     query_text = "query: " + query_text.strip()
 
     query_emb = model.encode(query_text, convert_to_numpy=True).astype("float32")
     query_emb = np.expand_dims(query_emb, 0)
 
-    SEARCH_LIMIT = 200  # fetch MANY candidates
+    if search_limit is None:
+        SEARCH_LIMIT = max(k * 10, 200)
+    else:
+        SEARCH_LIMIT = search_limit
 
     distances, indices = index.search(query_emb, SEARCH_LIMIT)
 
     candidates = []
     seen_ids = set()
+    total_cases = len(cases)
 
     for dist, idx in zip(distances[0], indices[0]):
+        # faiss may return -1 for padding if index shorter than SEARCH_LIMIT
+        if idx < 0 or idx >= total_cases:
+            continue
+
         case = cases[idx]
         cid = case.get("case_id")
-        raw = case.get("raw_text", "")
+        raw = case.get("raw_text", "") or ""
 
         # remove dupes
-        if cid in seen_ids:
+        if not cid or cid in seen_ids:
             continue
         seen_ids.add(cid)
 
         # ----------------------------
         # HARD FILTERS
         # ----------------------------
-        if len(raw) < 800:
-            continue  # too short = procedural junk
+        if len(raw) < min_length:
+            continue  # too short = procedural or not useful
 
         if is_procedural_case(raw):
-            continue  # remove orders
+            continue  # remove orders/procedural junk
 
         # ----------------------------
         # FEATURE SCORES
@@ -139,8 +148,6 @@ def recommend_precedents(query_text, k=10):
         sim = float(dist)
         court_s = court_score(raw)
         depth_s = reasoning_depth(raw)
-
-        # extra keyword scoring
         kw_s = 1.0 if "trademark" in raw.lower() else 0.0
 
         # FINAL SCORE
@@ -151,6 +158,9 @@ def recommend_precedents(query_text, k=10):
             + kw_s * 0.10      # topic alignment
         )
 
+        # sample text sized by sample_size param (None => full)
+        sample_text = raw
+
         candidates.append({
             "case_id": cid,
             "similarity": sim,
@@ -158,21 +168,23 @@ def recommend_precedents(query_text, k=10):
             "reasoning_depth": depth_s,
             "keyword_bonus": kw_s,
             "final_score": final,
-            "sample": raw[:400]
+            "sample": sample_text,
+            "title": case.get("title", ""),
+            "court": case.get("court", ""),
+            "date": case.get("date", "")
         })
 
     # rank by final score
     candidates = sorted(candidates, key=lambda x: x["final_score"], reverse=True)
 
     return candidates[:k]
+
 # ---------------------------------------------
 # FINAL PRECEDENT SELECTOR (ONE CASE + EXPLANATION)
 # ---------------------------------------------
-def find_best_precedent(query_text):
-    """Return ONE final precedent case with an explanation."""
-    
-    top_cases = recommend_precedents(query_text, k=10)
-    
+def find_best_precedent(query_text, **kwargs):
+    top_cases = recommend_precedents(query_text, **kwargs)
+
     if not top_cases:
         return {
             "precedent_case": None,
@@ -180,7 +192,6 @@ def find_best_precedent(query_text):
         }
 
     best = top_cases[0]
-
     cid = best["case_id"]
     sim = best["similarity"]
     court = best["precedent_strength"]
@@ -191,7 +202,6 @@ def find_best_precedent(query_text):
     explanation_lines = []
     explanation_lines.append(f"Case {cid} is selected as the strongest precedent because:")
 
-    # authority
     if court >= 4:
         explanation_lines.append(f"- It originates from a highly authoritative court (score {court:.2f}).")
     elif court > 0:
@@ -199,7 +209,6 @@ def find_best_precedent(query_text):
     else:
         explanation_lines.append(f"- Although court authority is low ({court:.2f}), other factors compensate.")
 
-    # reasoning strength
     if depth >= 3:
         explanation_lines.append(f"- The case contains substantial judicial reasoning (depth {depth:.2f}).")
     elif depth > 0:
@@ -207,46 +216,58 @@ def find_best_precedent(query_text):
     else:
         explanation_lines.append(f"- It lacks explicit reasoning phrases but remains legally relevant.")
 
-    # similarity
-    explanation_lines.append(
-        f"- It is closely related to the input scenario (semantic similarity {sim:.3f})."
-    )
-
-    # keyword boost
+    explanation_lines.append(f"- It is closely related to the input scenario (semantic similarity {sim:.3f}).")
     if topic > 0:
-        explanation_lines.append(
-            f"- It discusses trademark-related matters, aligning with the query topic."
-        )
-
-    explanation_lines.append(
-        "- After filtering procedural cases and re-ranking, this case had the highest overall score."
-    )
+        explanation_lines.append(f"- It discusses trademark-related matters, aligning with the query topic.")
+    explanation_lines.append("- After filtering procedural cases and re-ranking, this case had the highest overall score.")
 
     return {
         "precedent_case": best,
         "explanation": "\n".join(explanation_lines)
     }
 
+# ---------------------------------------------
+# CLI: parse args and run
+# ---------------------------------------------
+def main():
+    parser = argparse.ArgumentParser(description="PCR: Precedent Candidate Retriever")
+    parser.add_argument("--query", "-q", type=str, help="Query text. If omitted, you will be prompted.")
+    parser.add_argument("--k", type=int, default=5, help="Number of results to return")
+    parser.add_argument("--sample-size", type=int, default=2000, help="Number of chars to return from case text. Use 0 or -1 for full text")
+    parser.add_argument("--min-length", type=int, default=800, help="Minimum raw_text length to consider a case (filters junk)")
+    parser.add_argument("--show-explanation", action="store_true", help="Show explanation for best precedent")
+    args = parser.parse_args()
 
-# ---------------------------------------------
-# TEST
-# ---------------------------------------------
+    if args.query:
+        query = args.query
+    else:
+        try:
+            query = input("Enter your query: ").strip()
+        except Exception:
+            print("Interactive input not available; please use --query")
+            return
+
+    sample_size = None if args.sample_size <= 0 else args.sample_size
+
+    results = recommend_precedents(query, k=args.k, sample_size=sample_size, min_length=args.min_length)
+
+    if not results:
+        print("No results found.")
+        return
+
+    print(f"\nTop {len(results)} precedents:\n")
+    for i, r in enumerate(results, start=1):
+        print(f"[{i}] Case ID: {r['case_id']} | final_score: {r['final_score']:.4f} | sim: {r['similarity']:.4f}")
+        print(f"     Title: {r.get('title','')}")
+        print(f"     Court: {r.get('court','')} | Date: {r.get('date','')}")
+        print("     Sample:")
+        print(r["sample"].rstrip())
+        print("-" * 80)
+
+    if args.show_explanation:
+        final = find_best_precedent(query, k=args.k, sample_size=sample_size, min_length=args.min_length)
+        print("\nEXPLANATION FOR BEST PRECEDENT:\n")
+        print(final["explanation"])
+
 if __name__ == "__main__":
-    print("\nRunning final PCR (single precedent mode)...\n")
-
-    query = """
-    recommend_precedents(
-    criminal assault case where the defendant claims self-defense. 
-    the plaintiff argues the force used was excessive and unjustified. 
-    "the case raises issues about proportionality and reasonable apprehension of harm.
-    
-)
-    """
-
-    out = find_best_precedent(query)
-
-    print("\n===== FINAL PRECEDENT =====\n")
-    print(out["precedent_case"])
-
-    print("\n===== EXPLANATION =====\n")
-    print(out["explanation"])
+    main()
