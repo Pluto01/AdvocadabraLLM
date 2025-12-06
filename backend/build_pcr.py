@@ -11,7 +11,8 @@ from sentence_transformers import SentenceTransformer
 EMB_DIR = "./di_prime_embeddings"
 META_FILE = f"{EMB_DIR}/metadata.joblib"
 FAISS_FILE = f"{EMB_DIR}/faiss.index"
-DI_PATH = "/Users/srinandanasarmakesapragada/Documents/data_raw/di_dataset.jsonl"
+# Use local mock dataset for development
+DI_PATH = f"{EMB_DIR}/mock_dataset.jsonl"
 
 # ---------------------------------------------
 # Load resources

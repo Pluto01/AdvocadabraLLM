@@ -9,7 +9,8 @@ EMB_FILE = f"{EMB_DIR}/embeddings.npy"
 META_FILE = f"{EMB_DIR}/metadata.joblib"
 FAISS_FILE = f"{EMB_DIR}/faiss.index"
 
-DI_PATH = "/Users/srinandanasarmakesapragada/Documents/data_raw/di_dataset.jsonl"
+# Use local mock dataset for development
+DI_PATH = f"{EMB_DIR}/mock_dataset.jsonl"
 
 print("Loading FAISS index...")
 index = faiss.read_index(FAISS_FILE)
