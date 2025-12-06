@@ -11,14 +11,10 @@ export default function Navbar() {
             alt="AdvocaDabra" 
             className="h-8 w-auto"
           />
-        </Link>
-
-        {/* Desktop menu */}
+        </Link>        {/* Desktop menu */}
         <nav className="hidden md:flex items-center gap-8 text-[14px] text-gray-600">
-          <Link to="/" className="hover:text-gray-900">Home</Link>
           <Link to="/login" className="hover:text-gray-900">Login</Link>
           <Link to="/signup" className="hover:text-gray-900">Signup</Link>
-          {/* Dashboard removed */}
         </nav>
 
       </div>
