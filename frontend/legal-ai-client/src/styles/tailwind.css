@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Apple-like variables and helpers */
+:root {
+  --bg: #ffffff;
+  --muted: #6b7280;
+  --ink: #0b0b0b;
+}
+
+/* Body / global */
+html,body,#root { height:100%; }
+body {
+  @apply bg-white text-ink antialiased;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height:1.45;
+}
+
+/* Container helper */
+.container {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* Headings */
+h1 { @apply text-4xl md:text-6xl font-semibold tracking-tight leading-tight; }
+h2 { @apply text-2xl md:text-3xl font-semibold tracking-tight; }
+
+/* Muted text */
+.text-ink { color: var(--ink); }
+.text-muted, .muted { color: var(--muted); }
+
+/* product image & card helpers */
+.product-image {
+  border-radius: 12px;
+  box-shadow: 0 18px 50px rgba(2,6,23,0.06);
+  background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(250,250,250,0.6));
+  overflow: hidden;
+}
+
+/* pill button */
+.btn-pill {
+  @apply inline-flex items-center justify-center rounded-full border border-gray-200 px-4 py-2 text-sm;
+}
+
+/* nav link underline */
+.nav-link {
+  position: relative;
+  color: inherit;
+  text-decoration: none;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 2px;
+  background: transparent;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .18s ease, background .18s ease;
+}
+.nav-link:hover::after {
+  background: currentColor;
+  transform: scaleX(1);
+}
+
+/* card */
+.card {
+  @apply bg-white rounded-2xl border border-gray-100 p-5 transition-transform duration-200;
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--tw-shadow, 0 14px 40px rgba(16,24,40,0.08));
+}
+
+/* small helpers for hero product */
+.hero-kicker { color: var(--muted); font-size: .95rem; }
+
+/* respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
