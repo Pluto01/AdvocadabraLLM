@@ -469,16 +469,15 @@ export default function Dashboard() {
               }`}
             >
               Precedent Case Retrieval
-            </button>
-            <button
-              onClick={() => setActiveTab('files')}
+            </button>            <button
+              onClick={() => setActiveTab('ljp')}
               className={`py-6 px-2 border-b-2 font-medium transition-colors ${
-                activeTab === 'files'
+                activeTab === 'ljp'
                   ? 'border-black text-black'
                   : 'border-transparent text-gray-500 hover:text-gray-900'
               }`}
             >
-              My Files ({files.length})
+              Legal Judgement Prediction
             </button>
           </nav>
         </div>
@@ -503,69 +502,54 @@ export default function Dashboard() {
             selectedFile={selectedFile}
             setSelectedFile={setSelectedFile}
           />
-        )}
-
-        {activeTab === 'files' && (
-          <div className="max-w-4xl mx-auto">
+        )}        {activeTab === 'ljp' && (
+          <div className="max-w-4xl mx-auto space-y-12">
+            {/* Header */}
             <div className="text-center py-8">
               <h1 className="text-4xl md:text-5xl font-semibold text-gray-900 mb-4">
-                Your Files
+                Legal Judgement Prediction
               </h1>
-              <p className="text-xl text-gray-600">
-                Manage and organize your uploaded legal documents
+              <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                Predict legal case outcomes using AI-powered analysis of case facts and legal precedents
               </p>
             </div>
-            
-            {files.length === 0 ? (
-              <div className="text-center py-16">
-                <div className="text-6xl mb-6">📄</div>
-                <h3 className="text-2xl font-semibold text-gray-900 mb-2">No files uploaded yet</h3>
-                <p className="text-gray-600 mb-8">
-                  Upload files directly in the SCR or PCR tabs to get started with legal analysis.
-                </p>
+
+            {/* Coming Soon Content */}
+            <div className="text-center py-16">
+              <div className="text-8xl mb-8">⚖️</div>
+              <h3 className="text-3xl font-semibold text-gray-900 mb-4">Coming Soon</h3>
+              <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+                Legal Judgement Prediction is currently under development. This powerful feature will analyze case details 
+                and predict potential outcomes based on historical legal data and AI models.
+              </p>
+              
+              {/* Feature Preview Cards */}
+              <div className="grid md:grid-cols-3 gap-6 mt-12">
+                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100">
+                  <div className="text-3xl mb-4">🎯</div>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-2">Outcome Prediction</h4>
+                  <p className="text-gray-600 text-sm">
+                    Predict case outcomes with confidence scores based on similar historical cases
+                  </p>
+                </div>
+                
+                <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6 border border-purple-100">
+                  <div className="text-3xl mb-4">📊</div>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-2">Success Probability</h4>
+                  <p className="text-gray-600 text-sm">
+                    Calculate win/loss probabilities for different legal strategies
+                  </p>
+                </div>
+                
+                <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-100">
+                  <div className="text-3xl mb-4">🔍</div>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-2">Risk Assessment</h4>
+                  <p className="text-gray-600 text-sm">
+                    Identify potential risks and opportunities in your legal cases
+                  </p>
+                </div>
               </div>
-            ) : (
-              <div className="space-y-4">
-                {files.map((file) => (
-                  <div
-                    key={file.id}
-                    className={`bg-white rounded-3xl shadow-lg border transition-all duration-200 cursor-pointer ${
-                      selectedFile?.id === file.id
-                        ? 'border-black shadow-xl'
-                        : 'border-gray-100 hover:shadow-xl hover:border-gray-200'
-                    }`}
-                    onClick={() => setSelectedFile(file)}
-                  >
-                    <div className="p-6">
-                      <div className="flex items-center justify-between">
-                        <div className="flex-1">
-                          <h4 className="text-lg font-semibold text-gray-900 mb-1">
-                            {file.original_name}
-                          </h4>
-                          <p className="text-gray-600">
-                            {file.file_type.toUpperCase()} • Uploaded {new Date(file.upload_time).toLocaleDateString()}
-                          </p>
-                        </div>
-                        <div className="flex items-center space-x-4">
-                          {selectedFile?.id === file.id && (
-                            <span className="px-3 py-1 bg-black text-white text-sm font-medium rounded-full">
-                              Selected
-                            </span>
-                          )}
-                          <span className={`px-3 py-1 text-sm font-medium rounded-full ${
-                            file.processed 
-                              ? 'bg-green-100 text-green-800' 
-                              : 'bg-yellow-100 text-yellow-800'
-                          }`}>
-                            {file.processed ? 'Processed' : 'Pending'}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
+            </div>
           </div>
         )}
       </div>
