@@ -97,25 +97,6 @@ export default function Landing() {
       </section>
 
 
-      {/* PREVIEW SECTION */}
-      <section className="max-w-6xl mx-auto px-4 md:px-6 pb-24">
-        <div className="rounded-3xl border border-gray-200 bg-gray-50 p-6 shadow-soft">
-          <h2 className="text-2xl font-semibold">Dashboard Preview</h2>
-          <p className="text-muted text-sm mt-1 mb-4">
-            A modern workspace for analyzing legal documents.
-          </p>
-
-          <div className="rounded-2xl overflow-hidden border border-gray-200">
-            <img
-              src="/assets/dashboard-preview.jpg"
-              alt="Dashboard"
-              className="w-full"
-            />
-          </div>
-        </div>
-      </section>
-
-
       {/* CALL TO ACTION */}
       <section className="max-w-6xl mx-auto px-4 md:px-6 pb-20">
         <div className="rounded-3xl border border-gray-300 bg-white p-8 text-center shadow-subtle">
