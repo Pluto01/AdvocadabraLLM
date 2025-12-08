@@ -68,21 +68,21 @@ export default function Landing() {
 
       {/* FEATURES SECTION */}
       <section className="max-w-6xl mx-auto px-4 md:px-6 pb-20">
-        <h2 className="text-3xl font-semibold mb-6">Built for clarity</h2>
+        <h2 className="text-3xl font-semibold mb-6">What AdvocaDabra Can Do</h2>
 
         <div className="grid md:grid-cols-3 gap-6">
           {[
             {
-              title: "Judgment Prediction",
-              desc: "AI-generated verdict tendency and reasoning based on case patterns."
+              title: "LJP – Legal Judgment Prediction",
+              desc: "Predicts the likely outcome of a case (for / against) by comparing your facts with past judgments and learned case patterns.\n→ Useful for early case assessment, client counselling, and strategy planning."
             },
             {
-              title: "Explainability",
-              desc: "Clear bullet-point explanations that break down model decisions."
+              title: "SCR – Similar Case Retrieval",
+              desc: "Finds factually similar cases using vector similarity so you can see how courts handled cases that “look like” yours.\n→ Great for drafting pleadings, research, and building case bundles."
             },
             {
-              title: "Document Management",
-              desc: "Upload case files and analyze them through a clean, simple workflow."
+              title: "PCR – Precedent Case Retrieval",
+              desc: "Retrieves landmark and relevant precedents ranked by legal significance, not just keywords.\n→ Helps you find binding and persuasive authorities fast."
             },
           ].map((item) => (
             <div
@@ -90,7 +90,9 @@ export default function Landing() {
               className="bg-white border border-gray-200 rounded-2xl p-6 shadow-subtle"
             >
               <h3 className="text-lg font-medium">{item.title}</h3>
-              <p className="text-muted text-sm mt-2">{item.desc}</p>
+              {item.desc.split('\n').map((line, i) => (
+                <p key={i} className="text-muted text-sm mt-2">{line}</p>
+              ))}
             </div>
           ))}
         </div>
