@@ -536,11 +536,11 @@ def health():
     return jsonify({'status': 'healthy', 'timestamp': datetime.utcnow().isoformat()})
 
 if __name__ == '__main__':
-    print("🚀 Starting AdvocaDabra Backend Server...")
-    print("📊 SCR (Similar Case Retrieval) - Ready")
-    print("⚖️  PCR (Precedent Case Retrieval) - Ready")
-    print("🔐 Authentication System - Ready")
-    print("📁 File Upload System - Ready")
-    print("\n🌐 Server running on http://localhost:8000")
+    print("Starting AdvocaDabra Backend Server...")
+    print("SCR (Similar Case Retrieval) - Ready")
+    print("PCR (Precedent Case Retrieval) - Ready")
+    print("Authentication System - Ready")
+    print("File Upload System - Ready")
+    print("\nServer running on http://localhost:8000")
     
     app.run(debug=True, host='0.0.0.0', port=8000)

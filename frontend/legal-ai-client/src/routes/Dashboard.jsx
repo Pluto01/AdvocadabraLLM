@@ -512,21 +512,26 @@ export default function Dashboard() {
               <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
                 Predict legal case outcomes using AI-powered analysis of case facts and legal precedents
               </p>
-            </div>
-
-            {/* Coming Soon Content */}
+            </div>            {/* Coming Soon Content */}
             <div className="text-center py-16">
-              <div className="text-8xl mb-8">⚖️</div>
+              <div className="text-6xl mb-8 text-gray-400">
+                <svg className="w-24 h-24 mx-auto" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.736 6.979C9.208 6.193 9.696 6 10 6c.304 0 .792.193 1.264.979a1 1 0 101.472-1.358C12.279 4.784 11.232 4 10 4s-2.279.784-2.736 1.621a1 1 0 101.472 1.358zM7.2 9.2a1 1 0 011.6 0L10 10.4l1.2-1.2a1 1 0 111.6 1.6L11.6 12l1.2 1.2a1 1 0 11-1.6 1.6L10 13.6l-1.2 1.2a1 1 0 11-1.6-1.6L8.4 12l-1.2-1.2a1 1 0 010-1.6z" clipRule="evenodd" />
+                </svg>
+              </div>
               <h3 className="text-3xl font-semibold text-gray-900 mb-4">Coming Soon</h3>
               <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
                 Legal Judgement Prediction is currently under development. This powerful feature will analyze case details 
                 and predict potential outcomes based on historical legal data and AI models.
               </p>
-              
-              {/* Feature Preview Cards */}
+                {/* Feature Preview Cards */}
               <div className="grid md:grid-cols-3 gap-6 mt-12">
                 <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100">
-                  <div className="text-3xl mb-4">🎯</div>
+                  <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mb-4">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                    </svg>
+                  </div>
                   <h4 className="text-lg font-semibold text-gray-900 mb-2">Outcome Prediction</h4>
                   <p className="text-gray-600 text-sm">
                     Predict case outcomes with confidence scores based on similar historical cases
@@ -534,7 +539,11 @@ export default function Dashboard() {
                 </div>
                 
                 <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6 border border-purple-100">
-                  <div className="text-3xl mb-4">📊</div>
+                  <div className="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center mb-4">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                  </div>
                   <h4 className="text-lg font-semibold text-gray-900 mb-2">Success Probability</h4>
                   <p className="text-gray-600 text-sm">
                     Calculate win/loss probabilities for different legal strategies
@@ -542,7 +551,11 @@ export default function Dashboard() {
                 </div>
                 
                 <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-100">
-                  <div className="text-3xl mb-4">🔍</div>
+                  <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center mb-4">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                  </div>
                   <h4 className="text-lg font-semibold text-gray-900 mb-2">Risk Assessment</h4>
                   <p className="text-gray-600 text-sm">
                     Identify potential risks and opportunities in your legal cases
