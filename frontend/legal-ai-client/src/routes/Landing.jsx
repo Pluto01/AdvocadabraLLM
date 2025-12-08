@@ -68,21 +68,21 @@ export default function Landing() {
 
       {/* FEATURES SECTION */}
       <section className="max-w-6xl mx-auto px-4 md:px-6 pb-20">
-        <h2 className="text-3xl font-semibold mb-6">Built for clarity</h2>
+        <h2 className="text-3xl font-semibold mb-6">What Advoca-Dabra Can Do</h2>
 
         <div className="grid md:grid-cols-3 gap-6">
           {[
             {
-              title: "Judgment Prediction",
-              desc: "AI-generated verdict tendency and reasoning based on case patterns."
+              title: "SIMILAR CASE RETRIEVAL",
+              desc: "SCR instantly finds past cases that closely match the facts of a new legal matter. By combining semantic search with intelligent context understanding, it helps lawyers and researchers discover relevant judgments faster and with greater accuracy."
             },
             {
-              title: "Explainability",
-              desc: "Clear bullet-point explanations that break down model decisions."
+              title: "PRECEDENT CASE RECOMMENDATION",
+              desc: "PCR recommends the most applicable precedents for any uploaded case. It analyzes factual patterns, legal issues, and reasoning structures to suggest authoritative judgments that strengthen arguments and support informed decision-making."
             },
             {
-              title: "Document Management",
-              desc: "Upload case files and analyze them through a clean, simple workflow."
+              title: "LEGAL JUDGEMENT PREDICTION",
+              desc: "LJP provides a concise, AI-assisted prediction of how a court might assess a case based on its facts. It highlights potential holdings, reasoning paths, and confidence levels—offering quick insights to guide strategy, review, and case preparation."
             },
           ].map((item) => (
             <div
