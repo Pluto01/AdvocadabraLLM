@@ -1,18 +1,18 @@
-# 🏛️ AdvocaDabra Legal AI System
+# AdvocaDabra Legal AI System
 
 A comprehensive legal AI assistant that combines Similar Case Retrieval (SCR) and Precedent Case Retrieval (PCR) with a modern React frontend and real authentication system.
 
-## ✨ Features
+## Features
 
-- **🔍 Similar Case Retrieval (SCR)**: Find cases similar to your query using AI-powered semantic search
-- **📚 Precedent Case Retrieval (PCR)**: Discover relevant legal precedents with authority scoring
-- **📤 File Upload Support**: Upload and analyze PDF, TXT, JSON, CSV, Excel, and Word documents
-- **🔐 Real Authentication**: JWT-based authentication with SQLite database
-- **🎨 Modern UI**: Clean, responsive React interface with Tailwind CSS
-- **⚡ Fast Search**: FAISS-powered vector search through 103,980+ legal cases
-- **📊 Analysis Dashboard**: Integrated interface for text and file analysis
+- **Similar Case Retrieval (SCR)**: Find cases similar to your query using AI-powered semantic search
+- **Precedent Case Retrieval (PCR)**: Discover relevant legal precedents with authority scoring
+- **File Upload Support**: Upload and analyze PDF, TXT, JSON, CSV, Excel, and Word documents
+- **Real Authentication**: JWT-based authentication with SQLite database
+- **Modern UI**: Clean, responsive React interface with Tailwind CSS
+- **Fast Search**: FAISS-powered vector search through 103,980+ legal cases
+- **Analysis Dashboard**: Integrated interface for text and file analysis
 
-## 🏗️ Architecture
+## Architecture
 
 ### Backend (`/backend`)
 - **Flask API Server**: JWT authentication, file handling, AI analysis
@@ -32,7 +32,7 @@ A comprehensive legal AI assistant that combines Similar Case Retrieval (SCR) an
 - **FAISS Index** for fast similarity search
 - **Node Modules** managed automatically by npm (no duplicate installations)
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 AdvocadabraLLM/
@@ -61,7 +61,7 @@ AdvocadabraLLM/
         └── public/       # Static assets
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Python 3.8+
@@ -96,7 +96,7 @@ Frontend runs on: http://localhost:5173
 ### 3. Access the Application
 Open http://localhost:5173 and create an account to start using the legal AI system.
 
-## 📖 Usage
+## Usage
 
 ### Text Analysis
 1. Navigate to SCR or PCR tab
@@ -116,7 +116,7 @@ Open http://localhost:5173 and create an account to start using the legal AI sys
 - **Excel**: Legal spreadsheets, case lists
 - **Word**: Legal documents, briefs
 
-## 🛠️ API Endpoints
+## API Endpoints
 
 ### Authentication
 - `POST /api/auth/signup` - Create new account
@@ -133,7 +133,7 @@ Open http://localhost:5173 and create an account to start using the legal AI sys
 - `POST /api/pcr` - Precedent Case Retrieval
 - `GET /api/health` - System health check
 
-## 🧪 Testing
+## Testing
 
 Run the comprehensive test suite:
 ```bash
@@ -141,23 +141,23 @@ python3 test_system.py
 ```
 
 Tests include:
-- ✅ API Health Check
-- ✅ Authentication (Signup/Login)
-- ✅ SCR Text Analysis
-- ✅ PCR Text Analysis
-- ✅ File Upload
-- ✅ File Analysis
+- API Health Check
+- Authentication (Signup/Login)
+- SCR Text Analysis
+- PCR Text Analysis
+- File Upload
+- File Analysis
 
-## 📊 System Status
+## System Status
 
-- **Backend**: ✅ Running (Port 8000)
-- **Frontend**: ✅ Running (Port 5173)
-- **Database**: ✅ SQLite initialized
-- **AI Models**: ✅ SCR & PCR operational
-- **Embeddings**: 🔄 58,200/103,980 (56% complete)
-- **File Storage**: ✅ Upload system active
+- **Backend**: Running (Port 8000)
+- **Frontend**: Running (Port 5173)
+- **Database**: SQLite initialized
+- **AI Models**: SCR & PCR operational
+- **Embeddings**: 58,200/103,980 (56% complete)
+- **File Storage**: Upload system active
 
-## 🔧 Configuration
+## Configuration
 
 ### Environment Variables
 ```bash
@@ -172,7 +172,7 @@ MAX_CONTENT_LENGTH=50MB
 - **Uploads**: `backend/uploads/` (user files)
 - **Database**: `backend/users.db` (authentication)
 
-## 🎯 Production Ready Features
+## Production Ready Features
 
 - **Real Authentication**: JWT tokens with secure password hashing
 - **File Processing**: Multi-format support with error handling
@@ -182,7 +182,7 @@ MAX_CONTENT_LENGTH=50MB
 - **Security**: CORS enabled, input validation
 - **Performance**: FAISS indexing for fast search
 
-## 🔮 Future Enhancements
+## Future Enhancements
 
 - **LJP Integration**: Legal Judgment Prediction
 - **Advanced Analytics**: Case outcome prediction
@@ -190,13 +190,13 @@ MAX_CONTENT_LENGTH=50MB
 - **Collaborative Features**: Team workspaces
 - **Export Options**: PDF reports, case summaries
 
-## 📝 License
+## License
 
 This project is for educational and research purposes in legal AI technology.
 
 ---
 
-## 🚀 Quick Reference
+## Quick Reference
 
 | Component | Command | URL |
 |-----------|---------|-----|
@@ -206,7 +206,7 @@ This project is for educational and research purposes in legal AI technology.
 | **Run Tests** | `python3 test_system.py` | All endpoints tested |
 | **Clean Project** | `python3 cleanup.py` | Maintenance & stats |
 
-## 📋 Development Workflow
+## Development Workflow
 
 1. **Start Development**: `./start_system.sh`
 2. **Make Changes**: Edit files in `backend/` or `frontend/legal-ai-client/`
@@ -215,6 +215,6 @@ This project is for educational and research purposes in legal AI technology.
 
 ---
 
-**🎉 AdvocaDabra Legal AI System - Professional Architecture Ready for Production!**
+** AdvocaDabra Legal AI System - Professional Architecture Ready for Production!**
 
 *See `REORGANIZATION_SUMMARY.md` for complete details on the new project structure.*

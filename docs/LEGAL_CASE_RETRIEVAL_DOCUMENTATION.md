@@ -1,4 +1,4 @@
-# 🏛️ AdvocaDabra Legal Case Retrieval System - Complete Documentation
+# AdvocaDabra Legal Case Retrieval System - Complete Documentation
 
 **Generated on**: December 6, 2025  
 **Project**: AdvocaDabra LLM Legal AI System  
@@ -6,7 +6,7 @@
 
 ---
 
-## 📋 EXECUTIVE SUMMARY
+## EXECUTIVE SUMMARY
 
 This document provides a comprehensive technical breakdown of the AdvocaDabra Legal Case Retrieval System. The system implements two core AI-powered legal analysis features:
 - **SCR (Similar Case Retrieval)**: Semantic similarity search across legal cases
@@ -16,7 +16,7 @@ The architecture consists of a React frontend with a Flask backend, utilizing E5
 
 ---
 
-## 🎨 1. FRONTEND COMPONENTS
+## 1. FRONTEND COMPONENTS
 
 ### **Primary Dashboard Component**
 **File**: `frontend/legal-ai-client/src/routes/Dashboard.jsx`
@@ -194,7 +194,7 @@ const toggleCaseExpansion = (index) => {
 
 ---
 
-## 🔗 2. API INTEGRATION LAYER
+## 2. API INTEGRATION LAYER
 
 ### **API Service Configuration**
 **File**: `frontend/legal-ai-client/src/lib/api.js`
@@ -287,7 +287,7 @@ export const aiAPI = {
 
 ---
 
-## 🖥️ 3. BACKEND API IMPLEMENTATION
+## 3. BACKEND API IMPLEMENTATION
 
 ### **Flask Server Architecture**
 **File**: `backend/backend_server.py`
@@ -553,7 +553,7 @@ def analyze_file():
 
 ---
 
-## 📄 4. FILE PROCESSING PIPELINE
+## 4. FILE PROCESSING PIPELINE
 
 ### **File Processing Function**
 The backend processes multiple file formats using specialized libraries:
@@ -1372,7 +1372,7 @@ metadata_entry = {
 
 ---
 
-## 🔄 9. END-TO-END WORKFLOW EXAMPLES
+## 9. END-TO-END WORKFLOW EXAMPLES
 
 ### **Complete Text Query Workflow**
 
