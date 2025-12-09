@@ -1,9 +1,7 @@
 import React from 'react';
 
-// Since boi.jpg doesn't exist yet, using a placeholder
-// Once you add boi.jpg to public/assets/, update this import to:
-// import boiImage from '../../public/assets/boi.jpg';
-const boiImage = '/assets/placeholder-avatar.jpg';
+// Import the boi avatar image
+const boiImage = '/assets/boi.jpg';
 
 function Team() {
   const Member = ({ image, name, description, github, linkedin }) => (
