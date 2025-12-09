@@ -63,7 +63,7 @@ function Team() {
     },
     {
       image: boiImage,
-      name: "ABHINAV SHINDE",
+      name: "SHINDE ABHINAV",
       description: "245523748119",
       github: "https://github.com/SAbhinav1608",
       linkedin: "https://www.linkedin.com/in/abhinav-shinde-805765393/"
