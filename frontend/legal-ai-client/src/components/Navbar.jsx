@@ -14,6 +14,7 @@ export default function Navbar() {
         </Link>
         {/* Desktop menu - absolute to extreme right */}
         <nav className="hidden md:flex items-center gap-8 text-[14px] text-gray-600 absolute right-0 pr-4">
+          <Link to="/team" className="hover:text-gray-900">Team</Link>
           <Link to="/login" className="hover:text-gray-900">Login</Link>
           <Link to="/signup" className="hover:text-gray-900">Signup</Link>
         </nav>

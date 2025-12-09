@@ -6,6 +6,7 @@ import Landing from "./routes/Landing.jsx";
 import Signup from "./routes/Signup.jsx";
 import Dashboard from "./routes/Dashboard.jsx";
 import Login from "./routes/Login.jsx";
+import Team from "./routes/Team.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
 function AppContent() {
@@ -18,6 +19,7 @@ function AppContent() {
       {showNavbar && <Navbar />}
       <Routes>
         <Route path="/" element={<Landing />} />
+        <Route path="/team" element={<Team />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
 
