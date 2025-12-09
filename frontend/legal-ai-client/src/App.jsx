@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-import { AuthProvider } from "./hooks/useAuth.jsx";
+import { AuthProvider } from "./Auth.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Landing from "./routes/Landing.jsx";
 import Signup from "./routes/Signup.jsx";
