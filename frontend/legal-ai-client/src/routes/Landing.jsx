@@ -102,15 +102,15 @@ export default function Landing() {
       {/* CALL TO ACTION */}
       <section className="max-w-6xl mx-auto px-4 md:px-6 pb-20">
         <div className="rounded-3xl border border-gray-300 bg-white p-8 text-center shadow-subtle">
-          <h2 className="text-2xl font-semibold">Start analyzing smarter.</h2>
+          <h2 className="text-2xl font-semibold">Continue Your Legal Intelligence Journey</h2>
           <p className="text-muted mt-2 text-sm">
-            Create an account and try Advoca-Dabra today.
+            Start leveraging AI-powered insights with AdvocaDabra.
           </p>          <div className="mt-6 flex justify-center gap-3">
             <Link to="/signup" className="px-6 py-3 rounded-full bg-ink text-white text-sm">
-              Create Account
+              Get Started
             </Link>
             <Link to="/login" className="px-6 py-3 rounded-full border border-gray-300 text-sm">
-              Login
+              Access Dashboard
             </Link>
           </div>
         </div>
