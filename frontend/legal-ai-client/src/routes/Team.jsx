@@ -62,20 +62,6 @@ export default function Team() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 justify-items-center max-w-6xl mx-auto">
                         <Member
                             image="/assets/boi.jpeg"
-                            name="UDIT KANDI"
-                            description="2455237480122"
-                            github="https://github.com/Pluto01"
-                            linkedin="https://www.linkedin.com/in/udit-kandi-1005b337b/"
-                        />
-                        <Member
-                            image="/assets/boi.jpeg"
-                            name="P SAI KRUTHIN"
-                            description="245523748111"
-                            github="https://github.com/PSRIKRUTHIN"
-                            linkedin="https://www.linkedin.com/in/palatla-sri-kruthin-b326b5286/"
-                        />
-                        <Member
-                            image="/assets/boi.jpeg"
                             name="P JYE PRAHAAS"
                             description="245523748087"
                             github="https://github.com/Jye-Prahaas"
@@ -90,10 +76,24 @@ export default function Team() {
                         />
                         <Member
                             image="/assets/boi.jpeg"
+                            name="P SAI KRUTHIN"
+                            description="245523748111"
+                            github="https://github.com/PSRIKRUTHIN"
+                            linkedin="https://www.linkedin.com/in/palatla-sri-kruthin-b326b5286/"
+                        />
+                        <Member
+                            image="/assets/boi.jpeg"
                             name="ABHINAV SHINDE"
                             description="245523748119"
                             github="https://github.com/SAbhinav1608"
                             linkedin="https://www.linkedin.com/in/abhinav-shinde-805765393/"
+                        />
+                        <Member
+                            image="/assets/boi.jpeg"
+                            name="UDIT KANDI"
+                            description="2455237480122"
+                            github="https://github.com/Pluto01"
+                            linkedin="https://www.linkedin.com/in/udit-kandi-1005b337b/"
                         />
                     </div>
                 </div>
